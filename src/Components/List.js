@@ -6,6 +6,7 @@ export default class List extends Component {
   state = {
     todos: [],
     loading: true,
+    doneTodos: [],
   }
 
   componentDidMount() {
@@ -25,19 +26,6 @@ export default class List extends Component {
       })
     })
     .catch(error => console.log(error))
-
-  }
-
-  renderTodos = () => {
-    return this.state.todos.map((todo)=>{
-      console.log(todo)
-      return (  
-        <li key={todo._id}>
-          {todo.title} - {todo.body}
-          <button onClick={()=>{this.removeTodo(todo._id)}}>remove</button>
-        </li>
-      )
-    })
   }
 
   removeTodo = (id) => {
@@ -46,8 +34,49 @@ export default class List extends Component {
       this.getTodos()
     })
     .catch((error) => console.log(error))
-
   }
+
+  markDone = (todo) => {
+    this.setState((currentState) => {
+      return {
+        todos: currentState.todos.filter((currentTodo) => currentTodo._id !== todo._id),
+        doneTodos: currentState.doneTodos.concat([todo])
+      }
+    })
+  }
+
+  reactivateTodo = (todo) => {
+    this.setState((currentState) => {
+      return {
+        doneTodos: currentState.doneTodos.filter((currentTodo) => currentTodo._id !== todo._id),
+        todos: currentState.todos.concat([todo])
+      }
+    })
+  } 
+  
+  renderTodos = () => {
+    return this.state.todos.map((todo)=>{
+      return (  
+            <li key={todo._id}>
+              {todo.title} - {todo.body}
+              <button onClick={()=>{this.markDone(todo)}}>Done</button>
+              <button onClick={()=>{this.removeTodo(todo._id)}}>remove</button>
+            </li>
+      )
+    })
+  }
+
+  renderDoneTodos = () => {
+    return this.state.doneTodos.map ((todo) => {
+      return (
+            <li key={todo._id}>
+              {todo.title} - {todo.body}
+              <button onClick={()=>{this.reactivateTodo(todo)}}>Reactivate</button>
+            </li>
+      )
+    })
+  }
+
 
 
 
@@ -55,7 +84,10 @@ export default class List extends Component {
     return (
       <div>
         <h1>Todo list</h1>
-        {this.state.loading ? <p>Loading</p> : this.renderTodos()}    
+          <h3>active todos</h3>
+            {this.state.loading ? <p>Loading</p> : this.renderTodos()}
+          <h3>done todos</h3>
+            {this.state.loading ? <p>Loading</p> : this.renderDoneTodos()}
       </div>
     )
   }

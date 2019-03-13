@@ -31,11 +31,15 @@ export default class CreateTodo extends Component {
   render() {
     const {title, body} = this.state;
     return (
-      <div>
+      <div className="form-row">
         <form onSubmit={this.submitTodo}>
+        <div className="form-group col-md-6">
           <input type="text" placeholder="title" name="title" onChange={this.handleChange} value={title}/>
+        </div>
+        <div className="form-group col-md-6">
           <input type="text" placeholder="text" name="body" onChange={this.handleChange} value={body}/>
-          <input type="submit" value="Create Your Todo"/>  
+        </div>
+          <input type="submit" value="Create Your Todo" className="btn btn-secondary btn-lg btn-block"/>  
         </form>
       </div>
     )

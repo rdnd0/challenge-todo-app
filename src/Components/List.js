@@ -55,26 +55,48 @@ export default class List extends Component {
   } 
   
   renderTodos = () => {
-    return this.state.todos.map((todo)=>{
+    return <ul className="list-group list-group-flush">
+    {this.state.todos.map((todo)=>{
       return (  
-            <li key={todo._id}>
-              {todo.title} - {todo.body}
-              <button onClick={()=>{this.markDone(todo)}}>Done</button>
-              <button onClick={()=>{this.removeTodo(todo._id)}}>remove</button>
-            </li>
+        <li key={todo._id} className="list-group-item item">
+          <span className="todo">
+            {todo.title} - {todo.body}
+          </span>
+          <button onClick={()=>{this.markDone(todo)}}className="btn btn-warning">Done</button>
+          <button onClick={()=>{this.removeTodo(todo._id)}}className="btn btn-secondary">Remove</button>
+        </li>
       )
-    })
+    })}
+    </ul>
   }
 
   renderDoneTodos = () => {
-    return this.state.doneTodos.map ((todo) => {
-      return (
-            <li key={todo._id}>
-              {todo.title} - {todo.body}
-              <button onClick={()=>{this.reactivateTodo(todo)}}>Reactivate</button>
-            </li>
-      )
-    })
+    return <ul className="list-group list-group-flush">
+      {this.state.doneTodos.map((todo)=>{
+        return (  
+              <li key={todo._id} className="list-group-item item">
+                <span className="todo">
+                  {todo.title} - {todo.body}
+                </span>
+                <button onClick={()=>{this.reactivateTodo(todo)}}className="btn btn-primary">Reactivate</button>
+              </li>
+          )
+        })}
+        </ul>
+
+
+
+
+
+
+    // return this.state.doneTodos.map ((todo) => {
+    //   return (
+    //         <li key={todo._id}>
+    //           {todo.title} - {todo.body}
+    //           <button onClick={()=>{this.reactivateTodo(todo)}}>Reactivate</button>
+    //         </li>
+    //   )
+    // })
   }
 
 

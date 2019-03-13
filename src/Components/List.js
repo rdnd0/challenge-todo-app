@@ -9,6 +9,14 @@ export default class List extends Component {
   }
 
   componentDidMount() {
+    this.getTodos();
+  }
+  componentDidUpdate() {
+    this.props.refresh && this.renderTodos()
+    console.log(this.props.refresh)
+  }
+
+  getTodos = () => {
     Api.getTodos()
     .then((data)=>{
       this.setState({
@@ -17,14 +25,28 @@ export default class List extends Component {
       })
     })
     .catch(error => console.log(error))
+
   }
 
   renderTodos = () => {
-    this.state.todos.map((todo)=>{
-      return (
-        <li key={todo._id}>{todo}</li>
+    return this.state.todos.map((todo)=>{
+      console.log(todo)
+      return (  
+        <li key={todo._id}>
+          {todo.title} - {todo.body}
+          <button onClick={()=>{this.removeTodo(todo._id)}}>remove</button>
+        </li>
       )
     })
+  }
+
+  removeTodo = (id) => {
+    Api.deleteTodo(id)
+    .then(()=> {
+      this.getTodos()
+    })
+    .catch((error) => console.log(error))
+
   }
 
 

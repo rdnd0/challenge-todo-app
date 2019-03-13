@@ -10,7 +10,6 @@ export default class CreateTodo extends Component {
   }
 
   handleChange = (e) => {
-    console.log(e.target.name, e.target.value);
     this.setState({
       [e.target.name]: e.target.value,
     })
@@ -21,8 +20,8 @@ export default class CreateTodo extends Component {
     const {title, body} = this.state;
 
     Api.createTodo({title, body})
-      .then((result)=>{
-        console.log(result);
+      .then(()=>{
+        this.props.refresher()
       })
       .catch((error)=> {console.log('submitTodoError: ',error)})
   }

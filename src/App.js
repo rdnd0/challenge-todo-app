@@ -4,11 +4,24 @@ import CreateTodo from './Components/CreateTodo'
 import './App.css';
 
 class App extends Component {
+  state = {
+    refresh: false,
+  }
+
+  refresh = () => {
+    this.setState({
+      refresh: true,
+    })
+    console.log('refresher called from createtodo')
+  }
+
+
+
   render() {
     return (
       <div>
-        <CreateTodo/>
-        <List/>
+        <CreateTodo refresher={this.refresh}/>
+        <List refresh={this.state.refresh}/>
       </div>
     );
   }

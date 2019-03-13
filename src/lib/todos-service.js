@@ -15,6 +15,9 @@ class Api {
   createTodo(body) {
     return this.api.post('/todos', body);
   }
+  deleteTodo(id) {
+    return this.api.delete(`/todos/${id}`);
+  }
 
   // getTodo(id) {
   //   return this.api.get(`/todos/${id}`);
@@ -25,9 +28,6 @@ class Api {
   // }
 
 
-  // deleteTodo(id) {
-  //   return this.api.delete(`/todos/${id}`);
-  // }
 }
 
 const api = new Api();
